@@ -180,12 +180,51 @@ The Twitter Airline Sentiment Analysis project processes and analyzes approximat
 
 ### Deep Learning Model Performance
 
+- Tokenization with Keras `Tokenizer`, padded sequences (max_len=60)
+- Architectures: LSTM/GRU/SimpleRNN (optional bidirectional), 1–2 layers
+- Embedding layer, dropout, dense head
+- EarlyStopping + ReduceLROnPlateau
+- Optimizers searched: Adam, RMSprop, SGD
+- Metrics tracked: accuracy, macro F1, log loss, MSE
+
+### Best Model
+- Path: `Models/best_lstm_rmsprop_20251005_121338.keras`
+- Selection metric: test macro F1
+- Summary metrics:
+  - val_accuracy: 0.7834372834372835
+  - test_accuracy: 0.7907137907137907
+  - val_macro_f1: 0.7096431094521058
+  - test_macro_f1: 0.7237700944115218
+  - val_log_loss: 0.5525310334831637
+  - test_log_loss: 0.5477151522123053
+  - val_mse: 0.35169785169785167
+  - test_mse: 0.3392238392238392
+
+### Best Model Configuration
+- model_type: lstm
+- embedding_dim: 128
+- rnn_units: 128
+- rnn_layers: 1
+- bidirectional: True
+- dropout_rate: 0.3
+- recurrent_dropout: 0.0
+- dense_units: 128
+- batch_size: 64
+- optimizer: rmsprop
+- lr: 0.001
+
+## Metrics and Justification
+- Cross-entropy loss (log loss): primary training objective for multi-class classification with softmax; sensitive to calibrated probabilities.
+- Accuracy: intuitive overall correctness; good for headline comparison.
+- Macro F1: balances precision/recall across classes; important due to class imbalance (negative dominates). Macro averaging prevents the majority class from masking poor minority-class performance.
+- MSE on predicted class indices (auxiliary): sanity check on discrete predictions; less informative than cross-entropy for classification, included for completeness per requirements.
+
 The deep learning models (LSTM/GRU) provide competitive performance with different characteristics:
 
 - **Model Comparison**:
-  - **LSTM with Adam**: Best overall performance with balanced metrics
+  - **LSTM with RMSprop**: Best overall performance with balanced metrics
   - **GRU**: Faster training, slightly lower accuracy than LSTM
-  - **Optimizer Impact**: Adam outperforms RMSprop and SGD for this task
+  - **Optimizer Impact**: RMSprop outperforms Adam and SGD for this task
 - **Key Advantages**:
   - Automatic feature learning from raw text
   - Better handling of sequential dependencies
@@ -201,7 +240,7 @@ The deep learning models (LSTM/GRU) provide competitive performance with differe
 - Negative tweets are most frequent and easiest to classify because of the dataset imbalance.
 - Text length and punctuation patterns are strong sentiment indicators.
 - Class imbalance handling improved minority class performance.
-- LSTM models with Adam optimizer provided the best performance among deep learning approaches.
+- LSTM models with RMSprop optimizer provided the best performance among deep learning approaches.
 - Early stopping and learning rate reduction helped prevent overfitting in deep learning models.
 
 ## Project Structure
@@ -215,7 +254,7 @@ Sentimental_analysis/
 ├── Models/
 │   ├── logistic_regression_model.pkl   # Trained Logistic Regression model
 │   ├── dl_opt_adam.keras               # Deep Learning model (Adam optimizer)
-│   ├── dl_opt_rmsprop.keras            # Deep Learning model (RMSprop optimizer)
+│   ├── best_lstm_rmsprop_20251005_121338.keras            # Deep Learning model (RMSprop optimizer)
 │   ├── dl_opt_sgd.keras                # Deep Learning model (SGD optimizer)
 │   ├── preprocessing_artifacts.pkl     # Feature engineering artifacts
 │   └── dl_preprocessing_artifacts.pkl  # Tokenizer and label encoder for DL
