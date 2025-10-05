@@ -92,7 +92,7 @@ The Twitter Airline Sentiment Analysis project processes and analyzes approximat
 
    # Load Deep Learning model
    from tensorflow.keras.models import load_model
-   dl_model = load_model('Models/dl_opt_adam.keras')
+   dl_model = load_model('Models/best_lstm_adam_20251005_140737.keras')
    ```
 
 ### Expected Outputs
@@ -188,17 +188,17 @@ The Twitter Airline Sentiment Analysis project processes and analyzes approximat
 - Metrics tracked: accuracy, macro F1, log loss, MSE
 
 ### Best Model
-- Path: `Models/best_lstm_rmsprop_20251005_121338.keras`
+- Path: `/Models/best_lstm_adam_20251005_140737.keras`
 - Selection metric: test macro F1
 - Summary metrics:
-  - val_accuracy: 0.7834372834372835
-  - test_accuracy: 0.7907137907137907
-  - val_macro_f1: 0.7096431094521058
-  - test_macro_f1: 0.7237700944115218
-  - val_log_loss: 0.5525310334831637
-  - test_log_loss: 0.5477151522123053
-  - val_mse: 0.35169785169785167
-  - test_mse: 0.3392238392238392
+  - val_accuracy: 0.7900207900207901
+  - test_accuracy: 0.7903672903672904
+  - val_macro_f1: 0.7180858931887594
+  - test_macro_f1: 0.718467065705593
+  - val_log_loss: 0.5506271508316836
+  - test_log_loss: 0.5476535448803362
+  - val_mse: 0.3482328482328482
+  - test_mse: 0.3562023562023562
 
 ### Best Model Configuration
 - model_type: lstm
@@ -210,7 +210,7 @@ The Twitter Airline Sentiment Analysis project processes and analyzes approximat
 - recurrent_dropout: 0.0
 - dense_units: 128
 - batch_size: 64
-- optimizer: rmsprop
+- optimizer: adam
 - lr: 0.001
 
 ## Metrics and Justification
@@ -222,9 +222,9 @@ The Twitter Airline Sentiment Analysis project processes and analyzes approximat
 The deep learning models (LSTM/GRU) provide competitive performance with different characteristics:
 
 - **Model Comparison**:
-  - **LSTM with RMSprop**: Best overall performance with balanced metrics
+  - **LSTM with Adam**: Best overall performance with balanced metrics
   - **GRU**: Faster training, slightly lower accuracy than LSTM
-  - **Optimizer Impact**: RMSprop outperforms Adam and SGD for this task
+  - **Optimizer Impact**: Adam outperforms RMSprop and SGD for this task
 - **Key Advantages**:
   - Automatic feature learning from raw text
   - Better handling of sequential dependencies
@@ -253,11 +253,8 @@ Sentimental_analysis/
 │   └── tweets_preprocessed.csv         # Cleaned and processed data
 ├── Models/
 │   ├── logistic_regression_model.pkl   # Trained Logistic Regression model
-│   ├── dl_opt_adam.keras               # Deep Learning model (Adam optimizer)
-│   ├── best_lstm_rmsprop_20251005_121338.keras            # Deep Learning model (RMSprop optimizer)
-│   ├── dl_opt_sgd.keras                # Deep Learning model (SGD optimizer)
-│   ├── preprocessing_artifacts.pkl     # Feature engineering artifacts
-│   └── dl_preprocessing_artifacts.pkl  # Tokenizer and label encoder for DL
+│   ├── best_lstm_adam_20251005_140737.keras               # Deep Learning model (Adam optimizer)
+│   
 └── Notebooks/
     └── Santimental_analysis.ipynb      # Complete analysis workflow
 ```
